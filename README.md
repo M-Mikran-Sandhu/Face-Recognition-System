@@ -19,11 +19,6 @@
 
 ## 2. Technical Requirements
 
-### Hardware:
-- Minimum 4 GB RAM
-- 1.5 GHz processor (x64 or ARM64)
-- 500 MB of free disk space
-
 ### Software:
 - Python 3.10+
 - Libraries: `tkinter` or `PyQt5` (UI), `sqlite3` or `SQLAlchemy` (DB), `pandas`, `matplotlib` (data-related modules)
