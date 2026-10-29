@@ -1,0 +1,12 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Local SQLite database (created automatically on first run)
+src/database/*.db
+*.db
+
+# Environment files
+.env
+.venv/
+venv/

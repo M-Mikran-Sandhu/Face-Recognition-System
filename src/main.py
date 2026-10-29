@@ -1,5 +1,6 @@
 import os
 import sys
+import secrets
 # DON'T CHANGE THIS !!!
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
@@ -10,7 +11,9 @@ from src.routes.user import user_bp
 from src.routes.face_recognition import face_recognition_bp
 
 app = Flask(__name__, static_folder=os.path.join(os.path.dirname(__file__), 'static'))
-app.config['SECRET_KEY'] = 'asdf#FGSgvasgf$5$WGT'
+# Read the secret key from the environment. For local development a random
+# key is generated at startup (sessions reset when the server restarts).
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or secrets.token_hex(32)
 
 # Enable CORS for all routes
 CORS(app)
@@ -19,7 +22,9 @@ app.register_blueprint(user_bp, url_prefix='/api')
 app.register_blueprint(face_recognition_bp, url_prefix='/api/face')
 
 # uncomment if you need to use database
-app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(os.path.dirname(__file__), 'database', 'app.db')}"
+db_dir = os.path.join(os.path.dirname(__file__), 'database')
+os.makedirs(db_dir, exist_ok=True)
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(db_dir, 'app.db')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 with app.app_context():
